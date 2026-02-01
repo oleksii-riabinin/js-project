@@ -44,28 +44,37 @@ import "/src/sass/style.scss";
 //      }
 //      console.log(personalMovieDB);
 
-const usdCurs = 28;
-const discount = 0.9;
 
-function convert (amout,curs){
-  return curs * amout;
+function sayHello(name) {
+    return `Привет, ${name}!`;
 }
 
-function promotion (result){
-  console.log(result * discount);
+console.log(sayHello("Alexey"));
+
+function returnNeighboringNumbers (num) {
+console.log([num-1,num,num+1]);
+
 }
+returnNeighboringNumbers (6);
 
-promotion (convert(500, usdCurs));
+function getMathResult(base,count) {
+    if (typeof count !== 'number' || count <= 0) {
+        return base;
+    }
 
+    let result = '';
 
-function test (){
-  for (let i = 0; i<5; i++){
-    console.log(i);
-    if (i ===3) return
-  }
-  console.log("done");
+    for (let i = 1; i <= count; i++) {
+        result += base * i;
+
+        if (i !== count) {
+            result += '---';
+        }
+    }
+
+    return result;
 }
-test ();
+console.log(getMathResult(5,3));
 
-function doNothing(){};
-console.log(doNothing()===undefined);
+
+
