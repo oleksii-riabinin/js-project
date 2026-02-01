@@ -44,18 +44,28 @@ import "/src/sass/style.scss";
 //      }
 //      console.log(personalMovieDB);
 
+const usdCurs = 28;
+const discount = 0.9;
 
-function declaration (){
-  console.log("declaration");
+function convert (amout,curs){
+  return curs * amout;
 }
-declaration ();
 
-const expression = function(){
-console.log("expression");
-};
-expression();
+function promotion (result){
+  console.log(result * discount);
+}
 
-const calc = ( a, b) => a+b;
- console.log(calc(2,2));
+promotion (convert(500, usdCurs));
 
 
+function test (){
+  for (let i = 0; i<5; i++){
+    console.log(i);
+    if (i ===3) return
+  }
+  console.log("done");
+}
+test ();
+
+function doNothing(){};
+console.log(doNothing()===undefined);
