@@ -20,7 +20,7 @@ const personalMovieDB = {
 };
 
     let i = 0;
-     while(i<2){
+     do{
       const a = prompt("Один из последних просмотренных фильмов?",""),
       b = prompt("Оцените его?", "");
       i++
@@ -33,12 +33,13 @@ const personalMovieDB = {
       }
        
      }
+     while(i<2);
 
      if(personalMovieDB.count<10){
       console.log("Просмотрено мало фильмов");
      }else if(personalMovieDB.count<=10 && personalMovieDB.count<30){
       console.log("Вы класический зритель");
-     }else if(personalMovieDB.count<=30){
+     }else if(personalMovieDB.count>=30){
       console.log("Вы киноман");
      }else{
       console.log("Ошибка");
