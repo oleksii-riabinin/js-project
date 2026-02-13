@@ -78,45 +78,66 @@ import "/src/sass/style.scss";
 //      }
 //      writeYourGenres();
 
+//тут если мы меняем значение а в новом объекте то оно и меняется в старом 
+const obj ={
+    a:5,
+    b:1
+};
+const copy = obj;// передает ссылку
+copy.a=10;
+console.log(copy);
+console.log(obj);
 
-let arr = [1,2,3,6,8];
+//Метод который добовляет значения одного объект в другой(1зн: куда, 2зн: что отпровляем )
+const numbers = {
+    a:2,
+    b:5,
+    c:{
+        x:7,
+        y:4
+    }
+};
+const add = {
+    d:17,
+    e:20
+};
+console.log(Object.assign(numbers, add));
 
-//удаляет последний єлемент масива
-arr.pop();
+//Метод которій копирует МАСИВ
+const oldArray = ["a","b","c"];
+const newArray = oldArray.slice();
+newArray[1]= 2;
+console.log(newArray);
+console.log(oldArray);
 
-// // добавление єлемента в конец масива
-arr.push(10);
-console.log(arr);
+//ИЛИ через оператор разворота 
+const array =["a","b"];
+const newAaray = [...array];
+newAaray[0]= 1;
+console.log(newAaray);
+console.log(array);
 
-// //перебор значений в масиве
-for(let i =0;i<arr.length;i++){
-    console.log(arr[i]);
+//оператор разворота,добовляет значения одного масива в другой масив (...)
+const video =["youtube", "vimeo", "rutube"],
+      blogs =["wordpress","blogger","livejournal"],
+      internet= [...video, ...blogs, "inst"];
+      console.log(internet);
+
+// оператор разворота в функции
+function log(a,b,c){
+    console.log(a);
+    console.log(b);
+    console.log(c);
 }
-// //или(не работает в об'ектах)
-for(let value of arr){
-    console.log(value);
-}
+const num =[2,5,7];
+log(...num);
 
-//гибкий перебор элементов
-arr.forEach(function(item,i,arr){
-    console.log(`${i}: ${item} внутри масива ${arr}`);
-});
-
-const str = "pivo, sneki, voda, 99";
-//метод который показывает через какой знак пишем элементы 
-const products = str.split(",");
-//метод который меняет знак при выводе элементов 
-console.log(products.join(";"));
-
-//метод который сщртирует элементы в масиве(хорощо работает со строчными)но может и с другими типами
- const sortirovka = ["a","c","e", "b", 0, "B"];
- sortirovka.sort();
- console.log(sortirovka);
-
-//шаблон котрый работает с сортировкой других типов в масиве
-const sortOthersType = [3,6,1,10];
-sortOthersType.sort(compareNum);
-console.log(sortOthersType);
-function compareNum(a,b){
-    return a-b;
-}
+//оператор разворота в объектах
+const q = {
+    one:1,
+    two:2
+};
+const newQ = {...q};
+q.one = 3;
+console.log(newQ);
+console.log(q);
