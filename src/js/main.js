@@ -79,47 +79,20 @@ import "/src/sass/style.scss";
 //      writeYourGenres();
 
 
-const personalPlanPeter = {
-    name: "Peter",
-    age: "29",
-    skills: {
-        languages: ['ru', 'eng'],
-        programmingLangs: {
-            js: '20%',
-            php: '10%'
-        },
-        exp: '1 month'
-    },
-    //створили метод який буде виводити рік народження та які мови знає людина
- showAgeAndLangs: function(plan) {
-        const {age} = plan;
-        const {languages} = plan.skills;
-        let str = `Мне ${age} и я владею языками: `;
-        languages.forEach(function(lang) {
-            str += `${lang.toUpperCase()} `;
-        });
-        return str;
+//функция яка перетворює масив в строку та виводить повідомлення
+const family = ['Peter', 'Ann', 'Alex', 'Linda'];
+function showFamily(arr) {
+    if (arr.length === 0) {
+        return 'Семья пуста';
     }
-};
-console.log(personalPlanPeter.showAgeAndLangs(personalPlanPeter));
-//функція яка виводить опит людини
-function showExperience(plan) {
-    const{exp}= plan.skills;
-    return exp;
+    return 'Семья состоит из: ' + arr.join(' ');
 }
-showExperience(personalPlanPeter);
-//функція яка виводить строку де показується на скільки людина знає мови з об'єкту
-function showProgrammingLangs(plan) {
-    const progLangs = plan.skills.programmingLangs ;
-if(Object.keys(progLangs).length ===0){
-    return "";
-}
-let result = "";
-for(let key in progLangs){
-result+= `Язык ${key} изучен на ${progLangs[key]}\n`;
-}
-return result;     
-}
-showProgrammingLangs(personalPlanPeter);
+console.log(showFamily(family));
 
+//стрілочна функція яка виводить всі слова з нового рядку та пише всі сло в нижньому регистрі
+const favoriteCities = ['liSBon', 'ROME', 'miLan', 'Dublin'];
+function standardizeStrings(arr) {
+    arr.forEach(city => console.log(city.toLowerCase()));
+}
+standardizeStrings(favoriteCities);
 
