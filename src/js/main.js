@@ -78,66 +78,48 @@ import "/src/sass/style.scss";
 //      }
 //      writeYourGenres();
 
-//тут если мы меняем значение а в новом объекте то оно и меняется в старом 
-const obj ={
-    a:5,
-    b:1
-};
-const copy = obj;// передает ссылку
-copy.a=10;
-console.log(copy);
-console.log(obj);
 
-//Метод который добовляет значения одного объект в другой(1зн: куда, 2зн: что отпровляем )
-const numbers = {
-    a:2,
-    b:5,
-    c:{
-        x:7,
-        y:4
+const personalPlanPeter = {
+    name: "Peter",
+    age: "29",
+    skills: {
+        languages: ['ru', 'eng'],
+        programmingLangs: {
+            js: '20%',
+            php: '10%'
+        },
+        exp: '1 month'
+    },
+    //створили метод який буде виводити рік народження та які мови знає людина
+ showAgeAndLangs: function(plan) {
+        const {age} = plan;
+        const {languages} = plan.skills;
+        let str = `Мне ${age} и я владею языками: `;
+        languages.forEach(function(lang) {
+            str += `${lang.toUpperCase()} `;
+        });
+        return str;
     }
 };
-const add = {
-    d:17,
-    e:20
-};
-console.log(Object.assign(numbers, add));
-
-//Метод которій копирует МАСИВ
-const oldArray = ["a","b","c"];
-const newArray = oldArray.slice();
-newArray[1]= 2;
-console.log(newArray);
-console.log(oldArray);
-
-//ИЛИ через оператор разворота 
-const array =["a","b"];
-const newAaray = [...array];
-newAaray[0]= 1;
-console.log(newAaray);
-console.log(array);
-
-//оператор разворота,добовляет значения одного масива в другой масив (...)
-const video =["youtube", "vimeo", "rutube"],
-      blogs =["wordpress","blogger","livejournal"],
-      internet= [...video, ...blogs, "inst"];
-      console.log(internet);
-
-// оператор разворота в функции
-function log(a,b,c){
-    console.log(a);
-    console.log(b);
-    console.log(c);
+console.log(personalPlanPeter.showAgeAndLangs(personalPlanPeter));
+//функція яка виводить опит людини
+function showExperience(plan) {
+    const{exp}= plan.skills;
+    return exp;
 }
-const num =[2,5,7];
-log(...num);
+showExperience(personalPlanPeter);
+//функція яка виводить строку де показується на скільки людина знає мови з об'єкту
+function showProgrammingLangs(plan) {
+    const progLangs = plan.skills.programmingLangs ;
+if(Object.keys(progLangs).length ===0){
+    return "";
+}
+let result = "";
+for(let key in progLangs){
+result+= `Язык ${key} изучен на ${progLangs[key]}\n`;
+}
+return result;     
+}
+showProgrammingLangs(personalPlanPeter);
 
-//оператор разворота в объектах
-const q = {
-    one:1,
-    two:2
-};
-const newQ = {...q};
-q.one = 3;
-console.log(newQ);
-console.log(q);
+
