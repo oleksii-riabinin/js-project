@@ -139,3 +139,38 @@ console.log(isBudgetEnough(shoppingMallData));
 
 
 
+
+//TO string - перевод в строчный тип данных 
+//1) очень редко 
+// console.log(String(null));
+
+//2) (+"")
+console.log(typeof(5 + ''));
+const num = 5;
+console.log("https://..." + num);
+const fz = 26 + "px";
+console.log(fz);
+
+//To number - перевод в числовой тип данных
+//1) очень редко используется
+// console.log(typeof(Number("343")));
+
+// 2)
+console.log(typeof(+"5"));
+
+//TO boolean - перевод в логический тип данных
+
+// 0, '',null, undefined, NaN; === False
+//1)
+let swither = null;
+if(swither){
+    console.log("Working...")
+}
+swither=1;
+if(swither){
+    console.log("Working...")
+}
+
+// //2) очень редко 
+// console.log(typeof(!!"444"));
+
