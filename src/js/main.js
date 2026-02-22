@@ -140,37 +140,25 @@ console.log(isBudgetEnough(shoppingMallData));
 
 
 
-//TO string - перевод в строчный тип данных 
-//1) очень редко 
-// console.log(String(null));
 
-//2) (+"")
-console.log(typeof(5 + ''));
-const num = 5;
-console.log("https://..." + num);
-const fz = 26 + "px";
-console.log(fz);
+function sortStudentsByGroups(arr) {
+    arr.sort();
+    const a = [], b = [], c = [], rest = [];
 
-//To number - перевод в числовой тип данных
-//1) очень редко используется
-// console.log(typeof(Number("343")));
-
-// 2)
-console.log(typeof(+"5"));
-
-//TO boolean - перевод в логический тип данных
-
-// 0, '',null, undefined, NaN; === False
-//1)
-let swither = null;
-if(swither){
-    console.log("Working...")
-}
-swither=1;
-if(swither){
-    console.log("Working...")
+    for (let i = 0; i < arr.length; i++) {
+        if (i < 3) {
+            a.push(arr[i]);
+        } else if (i < 6) {
+            b.push(arr[i]);
+        } else if (i < 9) {
+            c.push(arr[i]);
+        } else {
+            rest.push(arr[i]);
+        }
+    }
+    //використвання термінального оператору(?...:)-працює як if
+    //до ? це умова, потім що виведе, та  після : в іншому випадку виведе(else)
+    return [a,b,c, `Оставшиеся студенты: ${rest.length === 0 ? '-' : rest.join(', ')}`]
 }
 
-// //2) очень редко 
-// console.log(typeof(!!"444"));
-
+console.log(sortStudentsByGroups(students));
