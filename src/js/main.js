@@ -84,81 +84,39 @@ import "/src/sass/style.scss";
   
 
 
-   const shoppingMallData = {
-    shops: [
-        {
-            width: 10,
-            length: 5
-        },
-        {
-            width: 15,
-            length: 7
-        },
-        {
-            width: 20,
-            length: 5
-        },
-        {
-            width: 8,
-            length: 10
-        }
-    ],
-    height: 5,
-    moneyPer1m3: 30,
-    budget: 50000
-}
-console.log(shoppingMallData);
+// let number = 5; debugger
 
-
-function isBudgetEnough(data) {
-
-    let totalArea = 0;
-
-    // 1. Рахуємо площу всіх магазинів
-    for (let i = 0; i < data.shops.length; i++) {
-        totalArea += data.shops[i].width * data.shops[i].length;
-    }
-
-    // 2. Обʼєм
-    const totalVolume = totalArea * data.height;
-
-    // 3. Вартість опалення
-    const totalCost = totalVolume * data.moneyPer1m3;
-
-    // 4. Перевірка бюджету
-    if (totalCost <= data.budget) {
-        return 'Бюджета достаточно';
-    } else {
-        return 'Бюджета недостаточно';
-    }
-   
-}
+// function logNumber(){
     
-console.log(isBudgetEnough(shoppingMallData));
+//     console.log(number);debugger
+// }
+// number=6;
+// logNumber();debugger
+// number=8;
+// logNumber();debugger
 
+//створюєму функцію
+function createCounter(){
+    //локальна змінна
+    let counter = 0;
 
-
-
-
-
-function sortStudentsByGroups(arr) {
-    arr.sort();
-    const a = [], b = [], c = [], rest = [];
-
-    for (let i = 0; i < arr.length; i++) {
-        if (i < 3) {
-            a.push(arr[i]);
-        } else if (i < 6) {
-            b.push(arr[i]);
-        } else if (i < 9) {
-            c.push(arr[i]);
-        } else {
-            rest.push(arr[i]);
-        }
+    //нова змінна(спочатку має значення undifind і вже потім бере значення функції)
+    //також вона має в собі посилання на counter
+    const myFunction = function(){
+        counter = counter +1;
+        return counter;
     }
-    //використвання термінального оператору(?...:)-працює як if
-    //до ? це умова, потім що виведе, та  після : в іншому випадку виведе(else)
-    return [a,b,c, `Оставшиеся студенты: ${rest.length === 0 ? '-' : rest.join(', ')}`]
+    //повертаємо (функцію)замикання
+    return myFunction;
 }
+//incriment досі пам'ятає посилання на counter де звідти вже бере значення counter і записує їх в наші с1,с2,с3
+const incriment = createCounter();
+const c1 = incriment() ;
+const c2 = incriment();
+const c3 = incriment();
+console.log(c1, c2, c3 );
 
-console.log(sortStudentsByGroups(students));
+
+
+
+
