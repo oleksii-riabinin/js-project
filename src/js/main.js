@@ -82,43 +82,64 @@ import "/src/sass/style.scss";
 
     
   
-
-// тут воно виведе спочатку 5,а вже потім додасть 1
-let i = 5; alert(i++);//alert працює тільки в браузері
-// //тут воно виведе одразу зменене число
-let j = 5; alert(++j);
-
-//коли ми працює з пустим масивом в такоми вигляді, то він буде себе приводити до пустого рядку ""
-console.log([]+ false - null + true);//тут воно виведе NaN
-console.log([]+1+2);//"12"
-
-//виведе 2
-let y = 1;
-let x =y=2;//тут воно працює так:  до у присваюємо 2,а вже потім це значення присва.ємо до х.
-alert(x);
-
-alert("1"[0]);//"1"
-
-//оператор &&(І) зупиняється на значенні false!!!
-console.log(2&&1&&null&&0&&undefined);
-
-//оператор ||(АБО) зупиняється на значенні true
-console.log(0||2||1||null||0||undefined);
-
-//коли ми пишемо !! то воно наступне значення за ним поверне булінове значення
-console.log(!!(1&&2) === (1&&2));//тому виведе false  так як булінове значення не буде дорівнювати значенню з других дужок
-
-//тут все працює так: спочатку ми перевіряємо яка дія повинна виконуватись першою(оператор І буде перевірятись першим
-// а вже потім АБО)
-//коли в нас в опраторі І будуть рівні то буде виводитись останне значення( в нашому випадку 3)
-//потім перевіряємо null||3 і так як АБО зупиняється на правді то воно знову виведе 3
-alert(null||2&&3||4);
+const restorantData = {
+    menu: [
+        {
+            name: 'Salad Caesar',
+            price: '14$'
+        },
+        {
+            name: 'Pizza Diavola',
+            price: '9$'
+        },
+        {
+            name: 'Beefsteak',
+            price: '17$'
+        },
+        {
+            name: 'Napoleon',
+            price: '7$'
+        }
+    ],
+    waitors: [
+        {name: 'Alice', age: 22}, {name: 'John', age: 24}
+    ],
+    averageLunchPrice: '20$',
+    openNow: true
+};
 
 
-const a=[1,2,3];
-const b=[1,2,3];
-console.log(a==b);//виведе false так як в нас це просто два контейнери які мають однакові значення
+function isOpen(prop) {
+    let answer = '';
+    prop ? answer = 'Открыто' : answer = 'Закрыто';
+    return answer;
+}
+console.log(isOpen(restorantData.openNow))
 
-alert(+"Infinity");//виведе просто infinity але з типом данних number так як стоїть "+" попереду строки
+//створюємо фунцію яка буде показувати чи менше або більше сумма деяких двої товарів
+function isAverageLunchPriceTrue(fDish, sDish, average) {
+    //тут ми усюди додаємо спереду "+"щоб можно було пистаи числові значення а не рядки
+    //потім метод .slice мии прибираємо перший елемент та останній залишаючи тільки число 
+    if (+fDish.price.slice(0, -1) + (+sDish.price.slice(0, -1)) < +average.slice(0,-1)) {
+        return 'Цена ниже средней';
+    } else {
+        return 'Цена выше средней';
+    }
+}
+//тут ми вже наші значення це з який масивів ми будемо брати числа
+console.log(isAverageLunchPriceTrue(restorantData.menu[1], restorantData.menu[3], restorantData.averageLunchPrice));
 
 
+
+function transferWaitors(data) {
+    const copy = Object.assign({}, data);
+
+    // Нам просто нужно менять весь массив данных,
+    // а не лезть напрямую менять каждого из сотрудников
+    // Так как это верхний уровень объекта, то значение 
+    // будет меняться только у копии
+    copy.waitors = [{name: 'Mike', age: 32}];
+    return copy;
+}
+
+console.log(transferWaitors(restorantData));
