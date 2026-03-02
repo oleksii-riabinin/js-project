@@ -82,64 +82,91 @@ import "/src/sass/style.scss";
 
     
   
-const restorantData = {
-    menu: [
-        {
-            name: 'Salad Caesar',
-            price: '14$'
-        },
-        {
-            name: 'Pizza Diavola',
-            price: '9$'
-        },
-        {
-            name: 'Beefsteak',
-            price: '17$'
-        },
-        {
-            name: 'Napoleon',
-            price: '7$'
-        }
-    ],
-    waitors: [
-        {name: 'Alice', age: 22}, {name: 'John', age: 24}
-    ],
-    averageLunchPrice: '20$',
-    openNow: true
-};
+// const restorantData = {
+//     menu: [
+//         {
+//             name: 'Salad Caesar',
+//             price: '14$'
+//         },
+//         {
+//             name: 'Pizza Diavola',
+//             price: '9$'
+//         },
+//         {
+//             name: 'Beefsteak',
+//             price: '17$'
+//         },
+//         {
+//             name: 'Napoleon',
+//             price: '7$'
+//         }
+//     ],
+//     waitors: [
+//         {name: 'Alice', age: 22}, {name: 'John', age: 24}
+//     ],
+//     averageLunchPrice: '20$',
+//     openNow: true
+// };
 
 
-function isOpen(prop) {
-    let answer = '';
-    prop ? answer = 'Открыто' : answer = 'Закрыто';
-    return answer;
-}
-console.log(isOpen(restorantData.openNow))
+// function isOpen(prop) {
+//     let answer = '';
+//     prop ? answer = 'Открыто' : answer = 'Закрыто';
+//     return answer;
+// }
+// console.log(isOpen(restorantData.openNow))
 
-//створюємо фунцію яка буде показувати чи менше або більше сумма деяких двої товарів
-function isAverageLunchPriceTrue(fDish, sDish, average) {
-    //тут ми усюди додаємо спереду "+"щоб можно було пистаи числові значення а не рядки
-    //потім метод .slice мии прибираємо перший елемент та останній залишаючи тільки число 
-    if (+fDish.price.slice(0, -1) + (+sDish.price.slice(0, -1)) < +average.slice(0,-1)) {
-        return 'Цена ниже средней';
-    } else {
-        return 'Цена выше средней';
-    }
-}
-//тут ми вже наші значення це з який масивів ми будемо брати числа
-console.log(isAverageLunchPriceTrue(restorantData.menu[1], restorantData.menu[3], restorantData.averageLunchPrice));
+// //створюємо фунцію яка буде показувати чи менше або більше сумма деяких двої товарів
+// function isAverageLunchPriceTrue(fDish, sDish, average) {
+//     //тут ми усюди додаємо спереду "+"щоб можно було пистаи числові значення а не рядки
+//     //потім метод .slice мии прибираємо перший елемент та останній залишаючи тільки число 
+//     if (+fDish.price.slice(0, -1) + (+sDish.price.slice(0, -1)) < +average.slice(0,-1)) {
+//         return 'Цена ниже средней';
+//     } else {
+//         return 'Цена выше средней';
+//     }
+// }
+// //тут ми вже наші значення це з який масивів ми будемо брати числа
+// console.log(isAverageLunchPriceTrue(restorantData.menu[1], restorantData.menu[3], restorantData.averageLunchPrice));
 
 
 
-function transferWaitors(data) {
-    const copy = Object.assign({}, data);
+// function transferWaitors(data) {
+//     const copy = Object.assign({}, data);
 
-    // Нам просто нужно менять весь массив данных,
-    // а не лезть напрямую менять каждого из сотрудников
-    // Так как это верхний уровень объекта, то значение 
-    // будет меняться только у копии
-    copy.waitors = [{name: 'Mike', age: 32}];
-    return copy;
-}
+//     // Нам просто нужно менять весь массив данных,
+//     // а не лезть напрямую менять каждого из сотрудников
+//     // Так как это верхний уровень объекта, то значение 
+//     // будет меняться только у копии
+//     copy.waitors = [{name: 'Mike', age: 32}];
+//     return copy;
+// }
 
-console.log(transferWaitors(restorantData));
+// console.log(transferWaitors(restorantData));
+
+
+
+
+//отримай елемент по id(все що з document працює тільки в браузері)
+const box = document.getElementById("box");
+console.log(box);
+
+//щоб отримати псевдомасив з елементів(html colection і він шукає всі елементи з назвою тегу)
+//  та якщо треба отримати якийсь окремий елемент просто шукаєм за індексом[]
+const btns = document.getElementsByTagName("button")[1];
+console.log(btns);
+
+//виводить всі елементи з класом , також виводить(html colection)
+const circles = document.getElementsByClassName("circle");
+console.log(circles);
+
+//виводить css селектори( він новіший за минулі),
+const hearts = document.querySelectorAll(".heart");
+//можно через forEach
+hearts.forEach(item=>{
+    console.log(item);
+});
+
+//виводить самий перший елемент
+const oneHeart = document.querySelector(".heart");
+console.log(oneHeart);
