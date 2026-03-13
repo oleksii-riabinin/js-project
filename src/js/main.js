@@ -1,7 +1,6 @@
 import "/src/sass/style.scss";
  "use strict"; //работаем в современном режиме
 
-//Рекурсія - функція яка запускає сама себе поки не дійде до базового випадку
 function pow (x,n){
   let result = 1;
   for(let i =0;i<n;i++){
@@ -9,7 +8,7 @@ function pow (x,n){
   }
   return result;
 }
-
+//Рекурсія - функція яка запускає сама себе поки не дійде до базового випадку
 //пошук степення через рекурсію
 function pow (x,n){
   //база
@@ -89,12 +88,10 @@ let students = {
   }
   return total / students;
  }
-
  console.log(getTotalProgressByIteration(students));
 
 
 //пошук середнього прогрессу з усього об'єкту через рекурсію
-
  function getTotalProgressByRecursion(data){
     if(Array.isArray(data)){
       //перебирає кількість студентів
@@ -119,3 +116,32 @@ let students = {
 const result = getTotalProgressByRecursion(students);
 console.log(result[0]/result[1]);
 
+//пошук факторіалу через рекурсію
+function factorial(number) {
+  if(typeof number != "number" || !Number.isInteger(number)){
+    return "Не целое число";
+  }
+  if(number>=1){
+    return number * factorial(number-1);
+  } else{
+    return 1;
+  }
+
+}
+//пошук факторіалу через цикл
+function factorial(number) {
+  if (typeof number !== "number" || !Number.isInteger(number)) {
+    return "Не целое число";
+  }
+  if (number === 0) {
+    return 1;
+  }
+  let result = 1;
+  
+  for (let i = 1; i <= number; i++) {
+    result *= i;
+  }
+
+  return result;
+}
+console.log(factorial(4));
