@@ -84,13 +84,23 @@
 
     <script src="src/js/script.js"></script>  -->
 
+<!-- атрибут defer -->
+<!--  дає скрипатам запускатись в фоновому режимі і запуститься коли скрипт до кінця завантажиться -->
+ <!-- а тут скрипти завантажуються по черзі -->
+<script defer src="/src/js/main.js"></script>
+<!-- атрибут async -->
+<!-- сторінка не чекає асинхроності скриптів
+стає незалежним від інших скриптів(не залежить також від DOM структури) 
+заватажується одразу 
+якщо декілька скриптів то виведеться першим той який швидше завантажиться -->
+<script async src="/src/js/main.js"></script>
 
-<div class="box">
-    touch me!
-</div>
+<p>Hello world</p>
+<p>Second message</p>
 
 
 
-    <script type="module" src="/src/js/main.js"></script>
+<script type="module" src="/src/js/main.js"></script>
+
 </body>
 </html>
