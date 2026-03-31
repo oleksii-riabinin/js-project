@@ -1,131 +1,42 @@
-import "/src/sass/style.scss";
- "use strict"; //работаем в современном режиме
+import "/src/scss/style.scss";
 
-//1)Перевірка числа на парність
-function isEven(number){
-  if(number%2===0){
-    return true;
-  }else{
-    return false;
-  }
-}
-console.log(isEven(3));
+window.addEventListener("DOMContentLoaded", ()=>{
 
-//2. Сума чисел
-function sumTo(n){
-  let sum=0;
-  for(let i = 0; i<=n;i++){
-    sum += i;
-  }
-  return sum;
-}
-console.log(sumTo(5));
+const tabs = document.querySelectorAll('.tabheader__item'),
+      tabsContent =document.querySelectorAll('.tabcontent'),
+      tabsParent = document.querySelector('.tabheader__items');
 
-//3. Розворот рядка
-function reverseString(str){
-  let string = str.split("");
-  let revers = string.reverse();
-
-return string.join("");
+//функція яка ставить для всіх елементів disply:none і проходить по кожному елементу і прибирає клас активності
+function hideTabContent(){
+  tabsContent.forEach(item =>{
+    item.style.display ='none';
+  });
+  tabs.forEach(item =>{
+    item.classList.remove("tabheader__item_active");
+  });
 }
 
-console.log(reverseString("hello"));
-
-//4. Факторіал через цикл
-function factorial(n){
-  let result = 1;
-  for(let i =1; i<=n;i++){
-    result *= i;
-  }
-  return result;
+function showTabContent(i=0){//показує нам спочатку перший елемент 
+  tabsContent[i].style.display='block';//показує елемент 
+    tabs[i].classList.add("tabheader__item_active");//додаємо клас активності
 }
 
-console.log(factorial(5));
+hideTabContent();
+showTabContent();
 
-//5. Порахувати голосні
-function countVowels(str){
-  let golosni = "aeiou";
-  let count = 0;
-  
-  for(let i =0; i<str.length;i++){
-    if(golosni.includes(str[i].toLowerCase())){
-      count++;
-    }
+tabsParent.addEventListener('click',(event)=>{//дія натискання
+  const target = event.target;//на який елемент натиснули
+
+  // Перевіряємо: чи ми натиснули саме на кнопку таба, а не просто десь поруч
+  if(target && target.classList.contains('tabheader__item')){
+    // Якщо так, перебираємо всі наші таби, щоб знайти порядковий номер того, на який натиснули
+    tabs.forEach((item,i)=>{
+      if(target==item){// Коли знайшли співпадіння
+        hideTabContent();// Спочатку все ховаємо
+        showTabContent(i);// Показуємо контент, номер якого (i) збігається з номером кнопки
+      }
+    });
   }
-  return count;
-}
-console.log(countVowels("javascript"));
+});
 
-//6. Найбільше число в масиві
-function findMax(arr) {
-  let max = arr[0];
-
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] > max) {
-      max = arr[i];
-    }
-  }
-
-  return max;
-}
-console.log(findMax([3,4,6,8,0]));
-
-//7. Найменше число в масиві
-function findMin(arr) {
-  let min = arr[0];
-
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] < min) {
-      min = arr[i];
-    }
-  }
-  return min;
-}
-console.log(findMin([3,4,6,8,1]));
-
-//8. Видалити дублікати
-function removeDuplicates(arr){
-    let result = [];
-
-  for (let i = 0; i < arr.length; i++) {
-    if (!result.includes(arr[i])) {
-      result.push(arr[i]);
-    }
-  }
-
-  return result;
-
-  }
-console.log(removeDuplicates([1,2,2,3,4,4]));
-
-//9. Перевірка паліндрома
-function isPalindrome(str) {
-  let reversed = "";
-
-  for (let i = str.length - 1; i >= 0; i--) {
-    reversed += str[i];
-  }
-  return str === reversed;
-}
-console.log(isPalindrome("level"));
-
-//10. Порахувати слова
-function countWords(str) {
-  let words = str.trim().split(" ");
-  return words.length;
-}
-console.log(countWords("Hello world from JS"));
-
-//11. Середнє число масиву
-function average(arr) {
-  if (arr.length === 0) return 0;
-
-  let sum = 0;
-
-  for (let i = 0; i < arr.length; i++) {
-    sum += arr[i];
-  }
-
-  return sum / arr.length;
-}
-console.log(average([10,20,30,40,50]));
+});
