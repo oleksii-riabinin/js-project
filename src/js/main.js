@@ -1,5 +1,5 @@
 import "/src/scss/style.scss";
-
+"use strict";
 window.addEventListener("DOMContentLoaded", ()=>{
 
 const tabs = document.querySelectorAll('.tabheader__item'),

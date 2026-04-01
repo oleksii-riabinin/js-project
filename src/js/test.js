@@ -1,69 +1,46 @@
-
+"use strict";
 
 window.addEventListener("DOMContentLoaded", () => {
-  //створюємо функцію яка виконує код з затримкою
-  //першим аргументом іде сама функція
-  //а другим затримка(пишемо в мілісекундах- де 1000мілісекунд=1секунді)
-  //якщо треба ввести аргумет нашої функції то пишемо після затримки
-  // let timerId = setTimeout(
-  //   function (text) {
-  //     console.log(text);
-  //   },
-  //   2000,
-  //   "hello",
-  // );
+  //працюємо з датами(всі дати зберігаються в мілесекундах починаючи з 1970років,а якщо треба до 1970 пишемо від'ємні значення)
+  //коли працюємо з пистим значенням в даті то якщо ми відкриваємо в терміналі воно показує в UTC форматі
+  //а коли на сайті то наш локальний час
 
-  //прибираємо нашу затримку і воно нічого не виведе
-  // clearInterval(timerId);
+  //UTC (Coordinated Universal Time) — це Всесвітній координований час.
+  //  Це головний стандарт, за яким світ регулює годинники та час.
+  // Точка відліку: UTC — це "нульова" точка
 
-  const btn = document.querySelector(".btn");
-  let timerId,
-    i = 0;
+  const nowd = new Date();
 
-    //створив функцію якв буде рухати куб з лівого верхнього краю до нижнього правого 
-    // і буде зупинятися коли дістаниться цього краю
+  const now = new Date("2026-04-01");
+   new Date.parse("2026-04-01");//метод який працює як звичаєне об'влення дати
+   
+  const noww = new Date(2026, 4, 1,20);
+  const nowm = new Date(0);
 
-  // function myAnimation() {
-  //   const elem = document.querySelector(".box");
-  //   let position = 0;
+  console.log(nowd);
+  console.log(now);
+  console.log(noww);
+  console.log(nowm);
 
-  //   const id = setInterval(frame, 10);
-  //   function frame() {
-      
-  //   //якщо ми дістались 300px то наша анімація закінчується
-  //     if (position == 300) {
-  //       clearInterval(id);
-  //     } else {//а поки не дісталась ми будемо додавати значання до позиції 
-  //       position++;
-  //       elem.style.top = position + "px";//це щоб воно писало не просто число, а число з px
-  //       elem.style.left = position + 'px';
-  //     }
-  //   }
-  // }
+  //методи в даті(є ще але вони схожі на ці- типу секунди і хвилини)
+  getFullYear(); //виводить нам тільки рік
+  getMonth(); //виводить нам тільки місяць
+  getDate(); //виводить нам тільки день
+  getDay(); //виводить наш день тиждня, але починається з неділі рахунок(0)
+  getUTCHours(); //виводить час вже не по вашому часовуму поясі
 
+  getTimezoneOffset(); //отримуэмо рызницю між часовим поясом і UTC(в хвилинах)
+  getTime(); //показує скільки мілесекунд пройшло з 1970
 
-  //створив анімацію яка робить що наш куб ходить туди сюди
-    function myAnimation() {
-      const elem = document.querySelector(".box");
-      let position = 0;
-      let direction = 1;
-      const id = setInterval(frame, 10);
-function frame() {
-    // Змінюємо позицію залежно від напрямку
-    position = position + direction;
+  //схожі методи але ми не отримуємо значення, а записуємо їх
+  //все починається з set, a не get
+  setHours(18);
 
-    // Оновлюємо стилі елемента
-    elem.style.top = position + "px";
-    elem.style.left = position + "px";
-
-    //  чи дійшли ми до краю
-    if (position >= 300) {
-      direction = -1; // Змінюємо напрямок на "назад"
-    } else if (position <= 0) {
-      direction = 1;  // Змінюємо напрямок на "вперед"
-    }
+  //дивимось на скільки часу наприклад знадоболось для знаходження різниці між кінцевою датою та початковою
+  let start = new Date();
+  for (let i = 0; i < 100000; i++) {
+    let some = i ** 3;
   }
-
-    }
-  btn.addEventListener('click',myAnimation);
+  let end = new Date();
+  console.log(`time: ${end - start}millesekund`);
 });
