@@ -1,0 +1,30 @@
+
+@use "/src/scss/variables/variables.scss" ;
+
+.test{
+  &__testik{
+    width: 100px;
+    height: 100px;
+    
+    font-size: 20px;
+    background-color: $primary;
+  }
+  &__main{
+        width: 100px;
+    height: 100px;
+    font-size: 20px;
+    background-color: $secondary;
+  }
+}
+.box{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-color: blue;
+}
+.wrapper{
+  position: relative;
+  width: 400px;
+  height: 400px;
+  border: 3px solid red;
+}

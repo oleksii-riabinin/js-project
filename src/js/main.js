@@ -9,7 +9,8 @@ const tabs = document.querySelectorAll('.tabheader__item'),
 //функція яка ставить для всіх елементів disply:none і проходить по кожному елементу і прибирає клас активності
 function hideTabContent(){
   tabsContent.forEach(item =>{
-    item.style.display ='none';
+    item.classList.add('hide');
+    item.classList.remove('show','fade');
   });
   tabs.forEach(item =>{
     item.classList.remove("tabheader__item_active");
@@ -17,7 +18,8 @@ function hideTabContent(){
 }
 
 function showTabContent(i=0){//показує нам спочатку перший елемент 
-  tabsContent[i].style.display='block';//показує елемент 
+  tabsContent[i].classList.add('show','fade');//показує елемент 
+  tabsContent[i].classList.remove('hide');
     tabs[i].classList.add("tabheader__item_active");//додаємо клас активності
 }
 
