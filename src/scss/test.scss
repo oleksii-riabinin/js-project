@@ -1,5 +1,5 @@
 
-@use "/src/scss/variables/variables.scss" ;
+@use "./variables/variables.scss" as vars;
 
 .test{
   &__testik{
@@ -7,13 +7,13 @@
     height: 100px;
     
     font-size: 20px;
-    background-color: $primary;
+    background-color: vars.$primary;
   }
   &__main{
         width: 100px;
     height: 100px;
     font-size: 20px;
-    background-color: $secondary;
+    background-color: vars.$secondary;
   }
 }
 .box{
