@@ -1,5 +1,8 @@
-import "/src/scss/style.scss";
 "use strict";
+
+import "/src/scss/style.scss";
+
+
 window.addEventListener("DOMContentLoaded", ()=>{
 //Tabs
 const tabs = document.querySelectorAll('.tabheader__item'),
@@ -108,4 +111,32 @@ function updateClock(){
 }
 
 setClock('.timer',deadLine);
+
+
+//modal
+
+const modalTrigger = document.querySelector('[data-modal]'),
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
+
+//це працює лише не прешій кнопці
+modalTrigger.addEventListener('click',()=>{
+  modal.classList.add('show');
+  modal.classList.remove('hide');
+  // modal.classList.toggle('show'); -- або так
+
+  document.body.style.overflow = 'hidden';
+});
+
+modalCloseBtn.addEventListener('click',()=>{
+  modal.classList.add("hide");
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+  // modal.classList.toggle('show'); -- або так
+});
+
+
+
+
+
 });
