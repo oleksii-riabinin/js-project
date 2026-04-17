@@ -1,68 +1,65 @@
 import "/src/scss/style.scss";
-("use strict");
+"use strict";
 window.addEventListener("DOMContentLoaded", () => {
-  // function User(name,id){
-  //   this.name = name;
-  //   this.id=id;
-  //   this.human=true;
-  //   this.hello= ()=>{
-  //     console.log(`Hello ${this.name}`);
-  //   }
-  // }
-
-  // User.prototype.exit = function(name){
-  // console.log(`Користувач ${this.name} пішов`);
-  // }
-  // const ivan = new User('Ivan',28);
-  // const alex = new User('Alex',20);
-  // console.log(ivan);
-  // console.log(alex);
-
-  // ivan.hello();
-  // alex.hello();
-  // ivan.exit();
-
-
-  // Правило: Назва конструктора ЗАВЖДИ пишеться з Великої літери!
-  function User(name, id) {
-    // 'this' вказує на поточний порожній об'єкт, який створюється прямо зараз.
-    // Записуємо унікальні властивості для КОЖНОГО користувача (беруться з параметрів)
-    this.name = name;
-    this.id = id;
-
-    // Це жорстко задана властивість. У всіх користувачів human завжди буде true
-    this.human = true;
-
-    // МЕТОД ВСЕРЕДИНІ КОНСТРУКТОРА:
-    // Мінус: Ця функція створюється ЗАНОВО (копіюється) для кожного нового об'єкта.
-    // Якщо буде 1000 користувачів, буде 1000 копій цієї функції в пам'яті.
-    this.hello = () => {
-      console.log(`Hello ${this.name}`);
-    };
+  //1)Звичайна функція: this = window,но коли стоїть use strict = undefined
+  function showThis() {
+    console.log(this);
   }
+  showThis();
 
-  // 2. ДОДАВАННЯ МЕТОДУ ЧЕРЕЗ ПРОТОТИП (prototype)
-  // Прототип — це "спільна бібліотека" для всіх об'єктів типу User.
-  // Плюс: Цей метод створюється ЛИШЕ ОДИН РАЗ. Усі об'єкти просто посилаються на нього. Це сильно економить пам'ять!
-  User.prototype.exit = function () {
-    console.log(`Користувач ${this.name} пішов`);
-  };
-
- 
-  // Слово 'new' робить : воно створює новий об'єкт {}, каже, що 'this' — це цей об'єкт, і автоматично його повертає.
-  const ivan = new User("Ivan", 28);
-  const alex = new User("Alex", 20);
-
-  // Дивимось, що вийшло
-  console.log(ivan); 
-  console.log(alex); 
+  function showThis(a,b) {
+    console.log(this);
+    function sum(){
+      console.log(this);
+      return a+b;
+    }
+    console.log(sum());
+  }
+  
+  showThis(4,5);
 
 
-  ivan.hello(); // Виведе: "Hello Ivan"
-  alex.hello(); // Виведе: "Hello Alex"
+  //2)Контекст у методів об'єкту -сам об'єкт
+  const obj ={
+    a:20,
+    b:15,
+    sum:function(){
+      console.log(this);
+    }
+  }
+  obj.sum()
 
-  // Викликаємо метод з ПРОТОТИПУ
-  ivan.exit();
+
+  //3)this в конструкторах і класах - це новий екземпляр обєкту (через new)
+function User(name, id) {
+  this.name = name;
+
+  this.id = id;
+
+  this.human = true;
+}
+const ivan = new User("Ivan", 28);
+console.log(ivan);
+
+//4) Ручне присваювання 
+function sayName(surname){
+  console.log(this);
+  console.log(this.name + surname);
+}
+const user = {
+  name:"John"
+};
+//наша функція отримала данні через ці дві властивості(різниця між цими властивостями це тільки виклик значеннь ) 
+sayName.call(user,"Smith");
+sayName.apply(user,['smith']);
+
+function count(num){
+  return this * num;
+}
+//властивість яка створює нову функцію,минулі не створюють нову функцію 
+const double =count.bind(2);//стає заість this 
+console.log(double(3));//наш num
+
 });
 
 
