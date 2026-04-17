@@ -122,6 +122,14 @@ window.addEventListener("DOMContentLoaded", () => {
   //   document.body.style.overflow = "hidden";
   // });
 
+  function openModal() {
+    modal.classList.add("show");
+    modal.classList.remove("hide");
+    document.body.style.overflow = "hidden";
+
+    // modal.classList.toggle('show');
+  }
+
   function closeModal() {
     modal.classList.add("hide");
     modal.classList.remove("show");
@@ -131,12 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //для всіх наших кнопок
   modalTrigger.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      modal.classList.add("show");
-      modal.classList.remove("hide");
-      // modal.classList.toggle('show'); -- або так
-      document.body.style.overflow = "hidden";
-    });
+    btn.addEventListener("click", openModal);
   });
 
   //створили те що коли ми натискаємо на зону поруч з модальним вікном то воно теж буде закриватись
@@ -154,4 +157,18 @@ window.addEventListener("DOMContentLoaded", () => {
       closeModal();
     }
   });
+
+  
+//функція яка відкриває модальне вікно коли ми доходимо до кінця сторінки 
+//   function showModalByScroll() {
+//     if (
+//       window.pageYOffset + document.documentElement.clientHeight >=
+//       document.documentElement.scrollHeight - 1
+//     ) {
+//       openModal();
+//     }
+    
+//   }
+
+//  window.addEventListener("scroll", showModalByScroll);
 });

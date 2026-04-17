@@ -1,40 +1,68 @@
-
 import "/src/scss/style.scss";
-"use strict";
-window.addEventListener("DOMContentLoaded", ()=>{
+("use strict");
+window.addEventListener("DOMContentLoaded", () => {
+  // function User(name,id){
+  //   this.name = name;
+  //   this.id=id;
+  //   this.human=true;
+  //   this.hello= ()=>{
+  //     console.log(`Hello ${this.name}`);
+  //   }
+  // }
 
-const boxx = document.querySelector(".boxx");
-const clk = document.querySelector(".clk");
-//отримуємо значення висоти та довжини блоку без margin i scroll(тфльки сам елемент і якщо є padding)
-const widthClient = boxx.clientWidth;
-const heighClient = boxx.clientHeight;
+  // User.prototype.exit = function(name){
+  // console.log(`Користувач ${this.name} пішов`);
+  // }
+  // const ivan = new User('Ivan',28);
+  // const alex = new User('Alex',20);
+  // console.log(ivan);
+  // console.log(alex);
 
- //отримуємо повну ширину і висоту навіть з margin i scroll
-const widthOffset = boxx.offsetWidth;
-const heighOffset = boxx.offsetHeight;
+  // ivan.hello();
+  // alex.hello();
+  // ivan.exit();
 
- //отримуємо ширину і висоту з урахуванням скролу
-const widthScroll= boxx.scrollWidth;
-const heighScroll = boxx.scrollHeight;
 
-clk.addEventListener("click", () => {
-  //після натискання отримуємо повну висоту з урахуванням скролу
-  boxx.style.height = boxx.scrollHeight + "px";
-  //показує скільки ми вже пролистали 
-  console.log(boxx.scrollTop)
+  // Правило: Назва конструктора ЗАВЖДИ пишеться з Великої літери!
+  function User(name, id) {
+    // 'this' вказує на поточний порожній об'єкт, який створюється прямо зараз.
+    // Записуємо унікальні властивості для КОЖНОГО користувача (беруться з параметрів)
+    this.name = name;
+    this.id = id;
+
+    // Це жорстко задана властивість. У всіх користувачів human завжди буде true
+    this.human = true;
+
+    // МЕТОД ВСЕРЕДИНІ КОНСТРУКТОРА:
+    // Мінус: Ця функція створюється ЗАНОВО (копіюється) для кожного нового об'єкта.
+    // Якщо буде 1000 користувачів, буде 1000 копій цієї функції в пам'яті.
+    this.hello = () => {
+      console.log(`Hello ${this.name}`);
+    };
+  }
+
+  // 2. ДОДАВАННЯ МЕТОДУ ЧЕРЕЗ ПРОТОТИП (prototype)
+  // Прототип — це "спільна бібліотека" для всіх об'єктів типу User.
+  // Плюс: Цей метод створюється ЛИШЕ ОДИН РАЗ. Усі об'єкти просто посилаються на нього. Це сильно економить пам'ять!
+  User.prototype.exit = function () {
+    console.log(`Користувач ${this.name} пішов`);
+  };
+
+ 
+  // Слово 'new' робить : воно створює новий об'єкт {}, каже, що 'this' — це цей об'єкт, і автоматично його повертає.
+  const ivan = new User("Ivan", 28);
+  const alex = new User("Alex", 20);
+
+  // Дивимось, що вийшло
+  console.log(ivan); 
+  console.log(alex); 
+
+
+  ivan.hello(); // Виведе: "Hello Ivan"
+  alex.hello(); // Виведе: "Hello Alex"
+
+  // Викликаємо метод з ПРОТОТИПУ
+  ivan.exit();
 });
-//отримуємо усі координати елементу( починаємо з лівого верхнього кута)
-// також коли там написано right це не від правої частини екрану
-//а від правої части елементу до лівого краю екрану
-console.log(boxx.getBoundingClientRect().top);//можно їх окремо отримати
 
-//отримуємо всі стилі яки є на елементі( змінювати не можем)тільки читати
-const style = window.getComputedStyle(boxx);
-console.log(style.display);
-});
 
-//метод який скролить сторінку від моменту на якому ми зараз зупинились
-scrollBy(0,400)//- перше значення це х, а друге у
-
-//метод який скролить сторінку відносно усієї сторінки
-scrollTo(0,400)//- перше значення це х, а друге у
