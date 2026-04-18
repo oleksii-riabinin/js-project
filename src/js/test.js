@@ -1,64 +1,46 @@
 import "/src/scss/style.scss";
 "use strict";
 window.addEventListener("DOMContentLoaded", () => {
-  //1)Звичайна функція: this = window,но коли стоїть use strict = undefined
-  function showThis() {
-    console.log(this);
+
+
+  //створення класу
+class Rectangle{
+  //в конструктор передаємо значення які хочемо використовувати
+  constructor(height,width){
+    this.height= height;
+    this.width = width;
   }
-  showThis();
-
-  function showThis(a,b) {
-    console.log(this);
-    function sum(){
-      console.log(this);
-      return a+b;
-    }
-    console.log(sum());
+  //метод класу 
+  calcArea(){
+    return this.height * this.width;
   }
-  
-  showThis(4,5);
+}
 
-
-  //2)Контекст у методів об'єкту -сам об'єкт
-  const obj ={
-    a:20,
-    b:15,
-    sum:function(){
-      console.log(this);
-    }
+//створили наслідувальний клас,який бере значення з головного класу
+//спочатку створюємо звичайний клас
+//потім через extends вводимо назву класу який ми хочемо наслідувати
+class ColoredRectangleWithText extends Rectangle{
+  constructor(height,width,text,bgColor){
+    //метод super допомогає нам не писати властивості які є в головному класі, а просто їх використовувати 
+    super(height,width);
+    this.text = text;
+    this.bgColor =bgColor;
   }
-  obj.sum()
-
-
-  //3)this в конструкторах і класах - це новий екземпляр обєкту (через new)
-function User(name, id) {
-  this.name = name;
-
-  this.id = id;
-
-  this.human = true;
+showMyProps(){
+  console.log(`Текст: ${this.text}, колір: ${this.bgColor}`);
 }
-const ivan = new User("Ivan", 28);
-console.log(ivan);
-
-//4) Ручне присваювання 
-function sayName(surname){
-  console.log(this);
-  console.log(this.name + surname);
 }
-const user = {
-  name:"John"
-};
-//наша функція отримала данні через ці дві властивості(різниця між цими властивостями це тільки виклик значеннь ) 
-sayName.call(user,"Smith");
-sayName.apply(user,['smith']);
+//як і звичайно створюється новий об'єкт
+const div = new ColoredRectangleWithText(25,10,"hello","red");
+div.showMyProps();
+console.log(div.calcArea());
 
-function count(num){
-  return this * num;
-}
-//властивість яка створює нову функцію,минулі не створюють нову функцію 
-const double =count.bind(2);//стає заість this 
-console.log(double(3));//наш num
+//новий об'єкт зі значеннями 
+const squre = new Rectangle(10,10);
+const long = new Rectangle(20,100);
+console.log(squre.calcArea());
+console.log(long.calcArea());
+
 
 });
 
