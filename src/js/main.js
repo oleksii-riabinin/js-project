@@ -174,7 +174,7 @@ window.addEventListener("DOMContentLoaded", () => {
   //використовуємо класи для карток
   //в цьому класі маємо всі наші значення та також викликаємо метод який конвертує валюту з доларів в гривні
   class MenuCard {
-    constructor(src, alt, title, descr, price, parentSelector,...classes) {
+    constructor(src, alt, title, descr, price, parentSelector, ...classes) {
       this.src = src;
       this.alt = alt;
       this.title = title;
@@ -189,16 +189,16 @@ window.addEventListener("DOMContentLoaded", () => {
     changeToUAN() {
       this.price = this.price * this.transfer;
     }
-    //метод який створює наші картки які приймають в себе всі наші значення 
+    //метод який створює наші картки які приймають в себе всі наші значення
     render() {
       const element = document.createElement("div");
-      if(this.classes.length ===0){
+      if (this.classes.length === 0) {
         this.element = "menu__item";
         element.classList.add(this.element);
-      }else{
+      } else {
         this.classes.forEach((className) => element.classList.add(className));
       }
-      
+
       element.innerHTML = `
               
             <img src=${this.src} alt=${this.alt} />
@@ -226,30 +226,95 @@ window.addEventListener("DOMContentLoaded", () => {
     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
     9,
     ".menu .container",
-    'menu__item',
-    'big'
+    "menu__item",
+    "big",
   ).render();
 
+  new MenuCard(
+    "/src/img/tabs/elite.jpg",
+    "elite",
+    "Меню “Премиум”",
+    "В меню “Премиум” мы используем не только красивый дизайн упаковки,но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!",
+    14,
+    ".menu .container",
+    "menu__item",
+  ).render();
 
-        new MenuCard(
-          "/src/img/tabs/elite.jpg",
-          "elite",
-          "Меню “Премиум”",
-          "В меню “Премиум” мы используем не только красивый дизайн упаковки,но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!",
-          14,
-          ".menu .container",
-          "menu__item"
-        ).render();
+  new MenuCard(
+    "/src/img/tabs/post.jpg",
+    "post",
+    'Меню "Постное"',
+    "Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля,овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.",
+    21,
+    ".menu .container",
+    "menu__item",
+  ).render();
 
-    new MenuCard(
-      "/src/img/tabs/post.jpg",
-      "post",
-      'Меню "Постное"',
-      "Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля,овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.",
-      21,
-      ".menu .container",
-      "menu__item"
-    ).render();
+  //forms
+  const forms = document.querySelectorAll("form");
+  //будемо виводити повідомлення
+  const message = {
+    loading: "Завантаження",
+    success: "Дякуємо! Ми вам зателефонуєм",
+    failure: "Щось пішло не так...",
+  };
+  //проходимось по всім нашим формам та викликаємо наш запит на сервер
+  forms.forEach((item) => {
+    postData(item);
+  });
 
+  //функція запиту на сервер
+  function postData(form) {
+    //цей обробник подій який працює кожен раз коли ми хочемо відправити форму
+    form.addEventListener("submit", (e) => {
+      //прибираємо дефолтні дії браузеру
+      e.preventDefault();
+      //створили новий блок, куди будемо записувати повідомлення
+      const statusMessage = document.createElement("div");
+      statusMessage.classList.add("status");
+      statusMessage.textContent = message.loading;
+      //додаємо наш елемент на сторінку
+      form.append(statusMessage);
 
+      //робимо наш запрос без перезавантаження сторінки
+      const request = new XMLHttpRequest();
+      //тут ми відправлємо наші данні на сервер,він знаходиться в папці htdocs в MAMP
+      request.open("POST", "http://localhost/server.php");
+
+      //головне щоб в наших формах, або інших інтерактивних частинах в html був атрибут name
+      //бо без неього наш FormData нічого не знайде
+      //коли працюємо з FormData  нам не треба робити заголовки
+      //передали наші форми щоб їх зібрати в одне ціле,щоб не проходити по кожному елементу 
+      const formData = new FormData(form);
+      request.send(formData);
+      //відслідковуємо кінцеву загрузку
+      request.addEventListener("load", () => {
+        if (request.status === 200) {
+          //показуємо дані які повернув сервер
+          console.log(request.response);
+          //пишемо що все добре
+          statusMessage.textContent = message.success;
+          //скидаєм наші форми
+          form.reset();
+          //ставим час зникнення повідомлень
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 2000);
+        } else {
+          //якщо якісь помилки то виводим смс про помилку
+          statusMessage.textContent = message.failure;
+        }
+      });
+    });
+  }
+
+  //якщо в нас формати json
+  // request.setRequestHeader('Content-type',"application/json");
+  //коли працюємо з форматом json то треба заголовок
+  // const object = {};
+  // formData.forEach(function(value,key){
+  //   object[key]=value;
+  // });
+  // const json= JSON.stringify(object);
+  // request.send(json);
 });
