@@ -308,6 +308,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  
+
   //якщо в нас формати json
   // request.setRequestHeader('Content-type',"application/json");
   //коли працюємо з форматом json то треба заголовок
