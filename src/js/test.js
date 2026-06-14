@@ -1,34 +1,28 @@
 import "/src/scss/style.scss";
 ("use strict");
 window.addEventListener("DOMContentLoaded", () => {
-  //Живі та статичні колекції і потрібні методи
+  //set
 
-  const boxesQuery = document.querySelectorAll(".box"); //статичні колекції
-  const boxesGet = document.getElementsByClassName("box"); //живі колекції
+  const arr = ["Alex", "Oleg", "Alex"];
 
-  //можно створити звичайнийстатичний масив
-  console.log(Array.from(boxesGet));
+  const set = new Set(arr);
+  //метод який додає значенння в масив
+  set.add("Ivan");
+  set.delete(value);
+  set.has();
+  set.clear();
 
-  boxesQuery[0].remove(); 
-  //показує нам відбиток, коли ми видалили перший елемент
-  //то все рівно в дереві будуть показуватись 3 ел
-  boxesGet[0].remove(); 
-  //а тут воно показує зміни, і коли ми тут ще видалили один елемент
-  //то воно покаже один елемент в дереві
-  console.log(boxesQuery);
-  console.log(boxesGet);
-  console.log(document.body.children);
-
-  for (let i = 0; i < 5; i++) {
-    const div = document.createElement("div");
-    div.classList.add("box");
-    document.body.append(div);
-  }
-
-  boxesQuery.forEach((box) => {
-    //метод який первіряє будь якіCSS-селекторами на їх наявність(перевіряє тільки там де запитуємо)
-    if (box.matches(".this")) console.log("This one!");
+  for (let value of set) console.log(value);
+  //тут valueAgain просто дублює значення бо set  немає ключів
+  set.forEach((value, valueAgain, set) => {
+    console.log(value, valueAgain);
   });
-  //метод який шукає найближчого батька(процює по всему HTML)
-  console.log(boxesQuery[0].closest(".wrapper"));
+
+  console.log(set);
+
+  //функція яка робить вже відсортований звичайний масив
+  function unique(arr) {
+    return  Array.from(new Set(arr));
+  }
+  console.log(unique(arr));
 });
