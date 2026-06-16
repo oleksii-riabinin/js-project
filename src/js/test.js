@@ -1,28 +1,48 @@
 import "/src/scss/style.scss";
-("use strict");
+"use strict";
 window.addEventListener("DOMContentLoaded", () => {
-  //set
 
-  const arr = ["Alex", "Oleg", "Alex"];
+   let cache = new WeakMap();
 
-  const set = new Set(arr);
-  //метод який додає значенння в масив
-  set.add("Ivan");
-  set.delete(value);
-  set.has();
-  set.clear();
+   function cacheUser(user){
+    if(!cache.has(user)){
+      cache.set(user, Date.now()); // Ключем є ОБ'ЄКТ користувача
+    }
+    return cache.get(user);
+   }
 
-  for (let value of set) console.log(value);
-  //тут valueAgain просто дублює значення бо set  немає ключів
-  set.forEach((value, valueAgain, set) => {
-    console.log(value, valueAgain);
-  });
+   let lena = {
+    name:'Elena'
+   };
+   let alex = {
+    name:'Alex'
+   };
 
-  console.log(set);
+   cacheUser(lena);
+   cacheUser(alex);
 
-  //функція яка робить вже відсортований звичайний масив
-  function unique(arr) {
-    return  Array.from(new Set(arr));
-  }
-  console.log(unique(arr));
+   lena=null;
+
+   console.log(cache.has(lena));
+   console.log(cache.has(alex));
+
+
+   //WeakSet
+   //add,has,delete
+
+   let massages = [
+     { text: "Hello", from: "John" },
+     { text: "World", from: "Alex" },
+     { text: "...", from: "M" },
+   ];
+
+   let readMessages = new WeakSet();
+
+   readMessages.add(massages[0]);
+  //  readMessages.add(massages[1]);
+
+   readMessages.add(massages[0]);//ігноруємо цей виклик 
+    massages.shift();// видаляє перший елемент масиву
+console.log(readMessages.has(massages[0]));
+ 
 });
