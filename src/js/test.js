@@ -1,48 +1,41 @@
 import "/src/scss/style.scss";
 "use strict";
 window.addEventListener("DOMContentLoaded", () => {
-
-   let cache = new WeakMap();
-
-   function cacheUser(user){
-    if(!cache.has(user)){
-      cache.set(user, Date.now()); // Ключем є ОБ'ЄКТ користувача
+  //батьківський клас
+  class Rectangle {
+    // constructor - це спеціальний метод, який запускається автоматично,
+    // коли ти пишеш слово "new". Він "будує" початковий об'єкт.
+    constructor(height, width) {
+      this.height = height;
+      this.width = width;
     }
-    return cache.get(user);
-   }
+    //коли пишемо методи в класі то нам не потрібно писати function, а просто назву
 
-   let lena = {
-    name:'Elena'
-   };
-   let alex = {
-    name:'Alex'
-   };
+    calcArea() {
+      return this.height * this.width;
+    }
+  }
+  //клас нащадок викликається через extends батько на якого посилаємося
+  class ColoredRectangleWithText extends Rectangle {
+    //пишемо усі значення
+    constructor(height, width, text, bgColor) {
+      //метод super()викликає конструктор батька
+      //пишеться Завжди першим
+      //дал вже пишемо значення нащадка
+      super(height, width);
+      this.text = text;
+      this.bgColor = bgColor;
+    }
+    showMyProps() {
+      console.log(`Text:${this.text},color:${this.bgColor}`);
+    }
+  }
 
-   cacheUser(lena);
-   cacheUser(alex);
-
-   lena=null;
-
-   console.log(cache.has(lena));
-   console.log(cache.has(alex));
-
-
-   //WeakSet
-   //add,has,delete
-
-   let massages = [
-     { text: "Hello", from: "John" },
-     { text: "World", from: "Alex" },
-     { text: "...", from: "M" },
-   ];
-
-   let readMessages = new WeakSet();
-
-   readMessages.add(massages[0]);
-  //  readMessages.add(massages[1]);
-
-   readMessages.add(massages[0]);//ігноруємо цей виклик 
-    massages.shift();// видаляє перший елемент масиву
-console.log(readMessages.has(massages[0]));
- 
+  //створення і виклик наших екземплярів
+  const div = new ColoredRectangleWithText(25, 50, "Hello", "red");
+  const square = new Rectangle(10, 10);
+  console.log(square.calcArea());
+  div.showMyProps();
+  console.log(div.calcArea());
+  
 });
