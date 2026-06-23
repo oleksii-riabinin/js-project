@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   //Timer
-  const deadLine = "2026-05-20";
+  const deadLine = "2026-09-02";
   //функція яка отримує різницю між датами
   function getTimeRemaining(endtime) {
     //отримаємо кількість мілисекунд
@@ -89,10 +89,9 @@ window.addEventListener("DOMContentLoaded", () => {
       minutes = timer.querySelector("#minutes"),
       seconds = timer.querySelector("#seconds");
 
+    let timeInterval;
     updateClock();
-
-    const timeInterval = setInterval(updateClock, 1000);
-
+    timeInterval = setInterval(updateClock, 1000);
     function updateClock() {
       const t = getTimeRemaining(endtime);
       days.innerHTML = getZero(t.days);
@@ -110,8 +109,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //modal
   const modalTrigger = document.querySelectorAll("[data-modal]"),
-    modal = document.querySelector(".modal"),
-    modalCloseBtn = document.querySelector("[data-close]");
+    modal = document.querySelector(".modal");
 
   //це працює лише не прешій кнопці
   // modalTrigger.addEventListener("click", () => {
@@ -135,7 +133,7 @@ window.addEventListener("DOMContentLoaded", () => {
     modal.classList.remove("show");
     document.body.style.overflow = "";
   }
-  modalCloseBtn.addEventListener("click", closeModal);
+
 
   //для всіх наших кнопок
   modalTrigger.forEach((btn) => {
@@ -144,7 +142,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //створили те що коли ми натискаємо на зону поруч з модальним вікном то воно теж буде закриватись
   modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
+    if (e.target === modal|| e.target.getAttribute('data-close') =='') {
       closeModal();
     }
   });
@@ -254,7 +252,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const forms = document.querySelectorAll("form");
   //будемо виводити повідомлення
   const message = {
-    loading: "Завантаження",
+    loading: "/src/icons/spinner.svg",
     success: "Дякуємо! Ми вам зателефонуєм",
     failure: "Щось пішло не так...",
   };
@@ -270,11 +268,16 @@ window.addEventListener("DOMContentLoaded", () => {
       //прибираємо дефолтні дії браузеру
       e.preventDefault();
       //створили новий блок, куди будемо записувати повідомлення
-      const statusMessage = document.createElement("div");
-      statusMessage.classList.add("status");
-      statusMessage.textContent = message.loading;
+      const statusMessage = document.createElement("img");
+      //додаємо атрибут для зображення
+      statusMessage.src=message.loading;
+      statusMessage.style.cssText=`
+      display: block;
+      margin:0 auto;
+      `;
       //додаємо наш елемент на сторінку
-      form.append(statusMessage);
+      // form.append(statusMessage);
+      form.insertAdjacentElement('afterend',statusMessage);
 
       //робимо наш запрос без перезавантаження сторінки
       const request = new XMLHttpRequest();
@@ -282,7 +285,7 @@ window.addEventListener("DOMContentLoaded", () => {
       request.open("POST", "http://localhost/server.php");
 
       //головне щоб в наших формах, або інших інтерактивних частинах в html був атрибут name
-      //бо без неього наш FormData нічого не знайде
+      //бо без нього наш FormData нічого не знайде
       //коли працюємо з FormData  нам не треба робити заголовки
       //передали наші форми щоб їх зібрати в одне ціле,щоб не проходити по кожному елементу 
       const formData = new FormData(form);
@@ -293,16 +296,13 @@ window.addEventListener("DOMContentLoaded", () => {
           //показуємо дані які повернув сервер
           console.log(request.response);
           //пишемо що все добре
-          statusMessage.textContent = message.success;
+          showThanksModal( message.success);
           //скидаєм наші форми
           form.reset();
-          //ставим час зникнення повідомлень
-          setTimeout(() => {
             statusMessage.remove();
-          }, 2000);
         } else {
           //якщо якісь помилки то виводим смс про помилку
-          statusMessage.textContent = message.failure;
+          showThanksModal(message.failure);
         }
       });
     });
@@ -319,4 +319,35 @@ window.addEventListener("DOMContentLoaded", () => {
   // });
   // const json= JSON.stringify(object);
   // request.send(json);
+
+
+  function showThanksModal(message){
+    //наша стара форма
+    const prevModalDialog = document.querySelector('.modal__dialog');
+
+    //робимо її скритою та відкриваємо 
+    prevModalDialog.classList.add('hide');
+    openModal();
+
+    //створення блоку подяки 
+    const thanksModal = document.createElement('div');
+    thanksModal.classList.add('modal__dialog');
+
+    thanksModal.innerHTML = `
+    <div class ="modal__content">
+    <div class = "modal__close"data-close>×</div>
+    <div class="modal__title">${message}</div>
+    `;
+
+    //додаємо у наш батьківський елемент
+    document.querySelector('.modal').append(thanksModal);
+
+    //через 4сек наша форма подяки закриється і повернеться стара форма 
+    setTimeout(()=>{
+      thanksModal.remove();
+      prevModalDialog.classList.add("show");
+      prevModalDialog.classList.remove("hide");
+      closeModal();
+    },4000);
+  }
 });
