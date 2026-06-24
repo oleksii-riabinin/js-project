@@ -7,7 +7,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Вішаємо обробник події 'input'. Він спрацьовує ЩОРАЗУ, коли користувач
   // вводить або видаляє хоча б один символ в інпуті.
   inputUa.addEventListener("input", () => {
-
     //Створюємо об'єкт запиту (нашого "кур'єра", який піде на сервер)
     const request = new XMLHttpRequest();
 
@@ -17,7 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //Вказуємо заголовки. Кажемо серверу: "Ми очікуємо, що ти пришлеш нам JSON"
     request.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    
+
     //відправляємо запит а сервер
     request.send();
 
@@ -46,4 +45,106 @@ window.addEventListener("DOMContentLoaded", () => {
     // response
     // readyState
   });
+
+  console.log("Запрос даних...");
+
+  //Promise
+  //resolve-каже типу що усе пройшло чудово
+  //reject-каже типу що щось не вийшло
+  const req = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      console.log("Подготовка...");
+      const product = {
+        name: "TV",
+        price: 2000,
+      };
+
+      resolve(product);
+    }, 2000);
+  });
+
+  //приймає наші значення які є позитивними(resolve)
+  req.then((product) => {
+    setTimeout(() => {
+      product.status = "order";
+      console.log(product);
+    }, 2000);
+  });
+
+
+    req.then((product) => {
+    return new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      product.status = "order";
+      resolve(product);
+    }, 2000);
+      });
+    }).then(data=>{
+      data.modify = true;
+      return data;
+      
+    }).then(data=>{
+      console.log(data);
+    });
+
+
+        req.then((product) => {
+     new Promise((resolve,reject)=>{
+    setTimeout(() => {
+      product.status = "order";
+      reject();
+    }, 2000);
+      });
+    }).then(data=>{
+      data.modify = true;
+      return data;
+      
+    }).then(data=>{
+      console.log(data);
+    }).catch(()=>{
+
+      console.error('Помилка')
+    });
+
+
+        req.then((product) => {
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                product.status = "order";
+                resolve(product);
+              }, 2000);
+            });
+          })
+          .then((data) => {
+            data.modify = true;
+            return data;
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch(() => {
+            console.error("Помилка");
+          }).finally(()=>{
+            console.log("Finally");
+          });
+
+
+          const test = time=>{
+            return new Promise(resolve=>{
+              setTimeout(()=>resolve(),time);
+            });
+          };
+
+          Promise.all([test(1000), test(2000)]).then(()=>{
+            console.log('ALL');
+          });
+
+                    Promise.race([test(1000), test(2000)]).then(() => {
+                      console.log("ALL");
+                    });
+
+          // test(1000).then(()=> console.log('1000 ms'));
+          // test(2000).then(() => console.log("2000 ms"));
+
+
 });
