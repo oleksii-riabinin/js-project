@@ -270,65 +270,64 @@ window.addEventListener("DOMContentLoaded", () => {
       //створили новий блок, куди будемо записувати повідомлення
       const statusMessage = document.createElement("img");
       //додаємо атрибут для зображення
-      statusMessage.src=message.loading;
-      statusMessage.style.cssText=`
+      statusMessage.src = message.loading;
+      statusMessage.style.cssText = `
       display: block;
       margin:0 auto;
       `;
       //додаємо наш елемент на сторінку
       // form.append(statusMessage);
-      form.insertAdjacentElement('afterend',statusMessage);
-
-      //робимо наш запрос без перезавантаження сторінки
-      const request = new XMLHttpRequest();
-      //тут ми відправлємо наші данні на сервер,він знаходиться в папці htdocs в MAMP
-      request.open("POST", "http://localhost/server.php");
+      form.insertAdjacentElement("afterend", statusMessage);
 
       //головне щоб в наших формах, або інших інтерактивних частинах в html був атрибут name
       //бо без нього наш FormData нічого не знайде
       //коли працюємо з FormData  нам не треба робити заголовки
-      //передали наші форми щоб їх зібрати в одне ціле,щоб не проходити по кожному елементу 
+      //передали наші форми щоб їх зібрати в одне ціле,щоб не проходити по кожному елементу
       const formData = new FormData(form);
-      request.send(formData);
-      //відслідковуємо кінцеву загрузку
-      request.addEventListener("load", () => {
-        if (request.status === 200) {
-          //показуємо дані які повернув сервер
-          console.log(request.response);
+      // const object = {};
+      // formData.forEach(function(value,key){
+      //   object[key]=value;
+      // });
+      // const json= JSON.stringify(object);
+      fetch("http://localhost/server.php", {
+        method: "POST",
+        body: formData,
+        //це треба якщо відправляємо JSON формат
+        // headers: {
+        //   "Content-type": "application/json",
+        // },
+        //body:JSON.stringify(object)
+      })
+        //data-це те що нам поверне наш сервер
+        //якщо у нас не JSON формат пишемо метод text() щоб повернулися нормальні дані
+        .then((data) => data.text())
+        .then((data) => {
+          console.log(data);
           //пишемо що все добре
-          showThanksModal( message.success);
+          showThanksModal(message.success);
           //скидаєм наші форми
-          form.reset();
-            statusMessage.remove();
-        } else {
-          //якщо якісь помилки то виводим смс про помилку
+
+          statusMessage.remove();
+        })
+        .catch(() => {
           showThanksModal(message.failure);
-        }
-      });
-    });
+        })
+        .finally(() => {
+          form.reset();
+        });
+    }
+  
+  );
   }
 
-  
-
-  //якщо в нас формати json
-  // request.setRequestHeader('Content-type',"application/json");
-  //коли працюємо з форматом json то треба заголовок
-  // const object = {};
-  // formData.forEach(function(value,key){
-  //   object[key]=value;
-  // });
-  // const json= JSON.stringify(object);
-  // request.send(json);
 
 
   function showThanksModal(message){
     //наша стара форма
     const prevModalDialog = document.querySelector('.modal__dialog');
-
     //робимо її скритою та відкриваємо 
     prevModalDialog.classList.add('hide');
     openModal();
-
     //створення блоку подяки 
     const thanksModal = document.createElement('div');
     thanksModal.classList.add('modal__dialog');
@@ -341,7 +340,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //додаємо у наш батьківський елемент
     document.querySelector('.modal').append(thanksModal);
-
     //через 4сек наша форма подяки закриється і повернеться стара форма 
     setTimeout(()=>{
       thanksModal.remove();
@@ -350,4 +348,16 @@ window.addEventListener("DOMContentLoaded", () => {
       closeModal();
     },4000);
   }
+
+
+  // fetch("https://jsonplaceholder.typicode.com/posts",{
+  //   method:"POST",
+  //   body: JSON.stringify({name:"Alex"}),
+  //   headers:{
+  //     'Content-type': "application/json"
+  //   }
+  // })
+  //   .then((response) => response.json())
+  //   .then((json) => console.log(json));
+  
 });
