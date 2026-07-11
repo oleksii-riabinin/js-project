@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
   <title>Document</title>
@@ -17,10 +17,11 @@
             font-size: 30px;
         }
     </style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap&subset=cyrillic-ext">
 </head>
 <body>
-  <label for="ua">UA</label>
+  <!-- <label for="ua">UA</label>
   <input type="text" id="ua">
   <label for="usd">USD</label>
   <input type="text" id="usd">
@@ -29,8 +30,19 @@
       <div class="box"></div>
   <div class="box this"></div>
   <div class="box"></div>
-</div>
+</div> -->
 
+
+
+    <div class="wrapper">
+        <form class="form-signin">
+            <h2 class="form-signin-heading">This is form</h2>
+            <input type="text" class="form-control">
+            <input id="checkbox" type="checkbox">
+            <button class="btn btn-block btn-lg btn-primary">Confirm</button>
+        </form>
+        <button id="color" class="btn btn-block btn-lg btn-primary">Change color</button>
+    </div>
 
 <script type="module" src="/src/js/test.js"></script>
 </body>
